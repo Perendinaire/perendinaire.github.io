@@ -1,0 +1,393 @@
+<!DOCTYPE HTML>
+<!-- Anthony Meehan -->
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>
+		New Zealand Visitor Visa Application
+	</title>
+	<link href="../css/immigration.css" rel="stylesheet" type="text/css" />
+	<!-- form-specific CSS -->
+	<link href="../css/form.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div class="wideMiddle">
+		<header class="middle">
+			<div class="left">
+				<h1>
+					New Zealand
+					<br />
+					Immigration
+				</h1>
+			</div>
+			<div class="right">
+				<h1>
+					Visitor Visa Application
+				</h1>
+				<h4>
+					For a temporary stay in New Zealand
+				</h4>
+			</div>
+		</header>
+	</div>
+	<!-- main section uses a mix of basic elements to describe the business -->
+	<section class="middle">
+		<form name="theForm" action="displayData.html" method="get" onsubmit="return isFormValid()" onreset="resetForm()" >
+			<!-- form divided into sections and fieldsets, grouping details -->
+			<p class="clearHead">
+				When filling in this form, please write clearly in English.
+			</p>
+			<h1>
+				Section A: Principal applicant's personal details
+			</h1>
+			<p>
+				Note that all fields in this section are required.
+			</p>
+			<!-- inferred that the "write your full name on the back" requirement for the paper form is not nessecary here -->
+			<p>
+				Attach one colour passport-size photograph of yourself here. Photograph must be less than six months old.
+				<i>Note that image must be of JPEG or PNG type.</i>
+			</p>
+			<fieldset>
+				<!-- Second photo is not required according to specification -->
+				<label for="buttonPhoto">Photo:</label>
+				<!-- validation format: onevent="validationMethod(elementToValidate, 'Error message')" -->
+				<input type="file" id="buttonPhoto" name="photo" accept="image/jpeg,image/png" onblur="checkEmpty(this, 'Must upload a photo')"/>
+			</fieldset>
+			<fieldset>
+				<legend>Name as shown in passport</legend>
+				<label for="fieldLName">Family/last name: </label>
+				<!-- constrain the text field by the "checkName" JS function -->
+				<input type="text" id="fieldLName" name="lName" maxlength="35" onblur="checkName(this, 'Invalid last name')" />
+				<!-- each input divided vertically by breaks -->
+				<br />
+				<label for="fieldFName">Given/first name(s): </label>
+				<input type="text" id="fieldFName" name="fName" maxlength="35" onblur="checkName(this, 'Invalid first name')" />
+				<br />
+			</fieldset>
+			<fieldset>
+				<legend>Preferred title</legend>
+				<label for="fieldTitle">Title: </label>
+				<select id="fieldTitle" name="personTitle" onblur="checkEmpty(this, 'Must select a title')" onclick="switchTitle(this)">
+					<option value="">Select a title..</option>
+					<option value="mr">Mr</option>
+					<option value="mrs">Mrs</option>
+					<option value="ms">Ms</option>
+					<option value="miss">Miss</option>
+					<option value="dr">Dr</option>
+					<option value="other">other (specify)</option>
+				</select>
+				<!-- hidden/shown in JS -->
+				<div id="divOTitle">
+					<label for="fieldOTitle">Other title: </label>
+					<input type="text" id="fieldOTitle" name="otherTitle" maxlength="35" />
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Other names you are known by, or have ever been known by</legend>
+				<label id="labelOName" for="buttonOName">Other name: </label>
+				<!-- additional fields added upon clicking, through JS -->
+				<input type="button" id="buttonOName" value="Add Name" onclick="addOtherName('labelOName')" class="formButton" />
+			</fieldset>
+			<fieldset>
+				<legend>Legal gender</legend>
+				<label for="radioMale">Male: </label>
+				<!-- validation handled in javascript. "clearErrorGender" clears an error, after
+					not selecting anything, submitting, then coming back and selecting something -->
+				<input type="radio" id="radioMale" name="gender" value="male" onclick="clearErrorGender()"/>
+				<br />
+				<label for="radioFemale">Female: </label>
+				<input type="radio" id="radioFemale" name="gender" value="female" onclick="clearErrorGender()"/>
+			</fieldset>
+			<fieldset>
+				<legend>Date of birth</legend>
+				<label for="dateBirth">Date: </label>
+				<!-- Full date validation/restriction handled by the browser, can be seen in form.js -->
+				<input type="date" id="dateBirth" name="birthDate" onblur="checkEmpty(this, 'Must select a birth date')" />
+				</fieldset>
+				<fieldset>
+				<legend>Location of birth</legend>
+				<!-- International locations can have a broad variety of characters, so just check for non-emptiness -->
+				<label for="fieldBirthCity">Town/city of birth: </label>
+				<input type="text" id="fieldBirthCity" name="birthCity" maxlength="90" onblur="checkEmpty(this, 'Must include a city')"/>
+				<br />
+				<label for="fieldBirthCountry">Country of birth: </label>
+				<input type="text" id="fieldBirthCountry" name="birthCountry" maxlength="90" onblur="checkEmpty(this, 'Must include a country')" />
+			</fieldset>
+			<fieldset>
+				<legend>Passport details</legend>
+				<label for="fieldPassportNum">Passport number: </label>
+				<input type="text" id="fieldPassportNum" name="passportNum" maxlength="16" onblur="checkAlphaNumeric(this, 'Invalid passport number')"/>
+				<br />
+				<label for="fieldPassportCountry">Passport country: </label>
+				<input type="text" id="fieldPassportCountry" name="passportCountry" maxlength="90" onblur="checkEmpty(this, 'Must include a country')" />
+				<br />
+				<label for="datePassportExpiry">Expiry date: </label>
+				<input type="date" id="datePassportExpiry" name="passportExpiry" onblur="checkEmpty(this, 'Must select an expiry date')" />
+			</fieldset>
+			<fieldset>
+				<legend>Other citizenships you hold</legend>
+				<label id="labelOCitizen" for="fieldOCitizenship">Other citizenship: </label>
+				<!-- additional fields added upon clicking, through JS -->
+				<input type="button" id="fieldOCitizenship" value="Add Citizenship" onclick="addOtherCitizenship('labelOCitizen')" class="formButton" />
+			</fieldset>
+			<fieldset>
+				<legend>Partnership status</legend>
+				<label for="fieldPartnership">Status: </label>
+				<select id="fieldPartnership" name="partnership" onblur="checkEmpty(this, 'Must select a status')">
+					<option value="">Select a status..</option>
+					<option value="single">Single</option>
+					<option value="partner">Partnered</option>
+					<option value="engaged">Engaged</option>
+					<option value="married">Married/in civil union</option>
+					<option value="separated">Separated</option>
+					<option value="divorced">Divorced</option>
+					<option value="widowed">Widowed</option>
+				</select>
+			</fieldset>
+			<h1>
+				Section B: Contact details
+			</h1>
+			<fieldset class="longLabel">
+				<legend>Your current residential address</legend>
+				<label for="fieldCurrAddress1">Address line 1: </label>
+				<input type="text" id="fieldCurrAddress1" name="currAddress1" maxlength="300" onblur="checkEmpty(this, 'Must include an address')"/>
+				<br />
+				<label for="fieldCurrAddress2">Address line 2 (optional): </label>
+				<input type="text" id="fieldCurrAddress2" name="currAddress2" maxlength="300" />
+				<br />
+				<label for="fieldLandline">Telephone (landline): </label>
+				<input type="text" id="fieldLandline" name="landline" maxlength="20" onblur="checkPhone(this, 'Invalid phone number')" />
+				<br />
+				<label for="fieldMobile">Telephone (mobile): </label>
+				<input type="text" id="fieldMobile" name="mobile" maxlength="20" onblur="checkPhone(this, 'Invalid phone number')" />
+				<br />
+				<label for="fieldEmail">Email: </label>
+				<input type="email" id="fieldEmail" name="email" maxlength="254" onblur="checkEmail(this, 'Invalid email address')" />
+			</fieldset>
+			<fieldset class="longLabel">
+				<legend>Name and address for communication about this application</legend>
+				<label for="radioSameAddress">Same address as <b>above</b>: </label>
+				<input type="radio" id="radioSameAddress" name="choiceCommAddress" value="same" onclick="switchCommAddress();clearErrorCommAddress();" />
+				<br />
+				<label for="radioOtherAddress">Other address (specify): </label>
+				<input type="radio" id="radioOtherAddress" name="choiceCommAddress" value="other" onclick="switchCommAddress();clearErrorCommAddress();" />
+				<!-- revealed when "other" is selected, through JS -->
+				<div id="setOAddress">
+					<fieldset>
+						<label for="fieldCommAddress1"><i>Company name (if applicable)</i></label>
+						<br />
+						<label for="fieldCommAddress1">and Address line 1: </label>
+						<input type="text" class="tall" id="fieldCommAddress1" name="commAddress1" maxlength="300" onblur="checkEmpty(this, 'Must include an address')"/>
+						<br />
+						<label for="fieldCommAddress2">Address line 2 (optional): </label>
+						<input type="text" id="fieldCommAddress2" name="commAddress2" maxlength="300" />
+						<br />
+						<label for="fieldCommDaytime">Telephone (daytime): </label>
+						<input type="text" id="fieldCommDaytime" name="commDaytime" maxlength="20" onblur="checkPhone(this, 'Invalid phone number')" />
+						<br />
+						<label for="fieldCommEvening">Telephone (evening): </label>
+						<input type="text" id="fieldCommEvening" name="commEvening" maxlength="20" onblur="checkPhone(this, 'Invalid phone number')" />
+						<br />
+						<label for="fieldCommEmail">Email: </label>
+						<input type="email" id="fieldCommEmail" name="commEmail" maxlength="254" onblur="checkEmail(this, 'Invalid email address')" />
+					</fieldset>
+					<fieldset>
+						<legend>Do you authorise the person stated <i>above</i> to act on your behalf?</legend>
+						<label for="radioYesOnBehalf">Yes: </label>
+						<input type="radio" id="radioYesOnBehalf" name="actOnBehalf" value="yes" onclick="clearErrorOnBehalf();" />
+						<br />
+						<label for="radioNoOnBehalf">No: </label>
+						<input type="radio" id="radioNoOnBehalf" name="actOnBehalf" value="no" onclick="clearErrorOnBehalf();" />
+					</fieldset>
+				</div>
+			</fieldset>
+			<fieldset class="longLabel">
+				<legend>If you are currently in New Zealand, your most recent overseas address</legend>
+				<label for="fieldOverAddress1">Address line 1: </label>
+				<input type="text" id="fieldOverAddress1" name="overAddress1" maxlength="300" />
+				<br />
+				<label for="fieldOverAddress2">Address line 2 (optional): </label>
+				<input type="text" id="fieldOverAddress2" name="overAddress2" maxlength="300" />
+				<br />
+			</fieldset>
+				<fieldset class="longLabel">
+				<legend>Have you received immigration advice on this application?</legend>
+				<p class="wide">
+					<i>Note that you can find a definition of immigration advice at
+						<a href="http://www.immigration.govt.nz/advice">www.immigration.govt.nz/advice</a></i>.
+				</p>
+				<label for="radioYesAdvice">Yes: </label>
+				<input type="radio" id="radioYesAdvice" name="recievedAdvice" value="yes" onclick="switchAdvice();clearErrorAdvice();" />
+				<br />
+				<!-- hidden unless Yes is checked -->
+				<p class="highlight" id="noteYesAdvice">
+					<i>Make sure that your immigration adviser completes <b>Section J: Immigration adviser’s details.</b></i>
+				</p>
+				<label for="radioNoAdvice">No: </label>
+				<input type="radio" id="radioNoAdvice" name="recievedAdvice" value="no" onclick="switchAdvice();clearErrorAdvice();" />
+			</fieldset>
+				<fieldset class="longLabel">
+				<legend>Details of any friends, relatives, or contacts you have in New Zealand</legend>
+				<label id="labelContact" for="buttonContact">Friend, relative or contact:</label>
+				<!-- field set dynamically added in JS when button is clicked -->
+				<input type="button" id="buttonContact" value="Add Contact" onclick="addContact('labelContact')" class="formButton" />
+				<br />
+			</fieldset>
+			<fieldset class="longLabel">
+				<legend>List all periods of employment, including self-employment</legend>
+				<label id="labelEmploy" for="buttonEmployment">Period of employment:</label>
+				<!-- field set dynamically added in JS when button is clicked -->
+				<input type="button" id="buttonEmployment" value="Add Period" onclick="addEmployment('labelEmploy')" class="formButton" />
+				<br />
+			</fieldset>
+				<h1>
+					Section L: Paying your application fee
+				</h1>
+				<p>
+					To find out how much the fee is and where to send
+				your application, use our office and fees finder at
+				<a href="http://www.immigration.govt.nz/fees">www.immigration.govt.nz/fees</a>.
+				<br />
+				Note that some offshore branches do not accept credit cards.
+				The office and fees finder contains information about
+				alternative methods of payment.
+				</p>
+				<fieldset class="longLabel">
+				<legend>Your application fee</legend>
+				<label for="fieldCurrencyCode">Currency Code (ie NZD): </label>
+				<input type="text" id="fieldCurrencyCode" name="currencyCode" maxlength="3" size="3" onblur="checkCurrencyCode(this, 'Invalid currency code')" />
+				<br />
+				<label for="fieldAmount">Amount: </label>
+				<!-- number type along with step, browser automatically validates numbers -->
+				<input type="number" id="fieldAmount" name="amount" min="0" max="9999999999" step="0.01" onblur="checkEmpty(this, 'Must enter an amount of money')" />
+				<br />
+				<br />
+				<label for="fieldAppNumber">Application number: <br /><i>(office use only)</i></label>
+				<!-- assuming that the application number requires some non-empty string of digits, and is required -->
+				<input type="text" id="fieldAppNumber" name="appNumber" maxlength="64" onblur="checkNumeric(this, 'Invalid application number')"/>
+				</fieldset>
+				<fieldset class="longLabel">
+					<legend>Preferred methods of payment</legend>
+				<label for="radioBankCheque">Bank cheque/bank draft: </label>
+				<input type="radio" id="radioBankCheque" name="choicePayment" value="bankCheque" onclick="switchPayment();clearErrorPayment();" />
+				<br />
+				<label for="radioCreditCard">Credit card: </label>
+				<input type="radio" id="radioCreditCard" name="choicePayment" value="creditCard" onclick="switchPayment();clearErrorPayment();" />
+				<fieldset id="setOCreditCard">
+					<br />
+					<label for="radioMastercard">Mastercard: </label>
+					<input type="radio" id="radioMastercard" name="choiceCard" value="mastercard" onclick="switchCard();clearErrorCard();" />
+					<br />
+					<label for="radioVisa">Visa: </label>
+					<input type="radio" id="radioVisa" name="choiceCard" value="visa" onclick="switchCard();clearErrorCard();" />
+					<br />
+					<label for="radioSwitchCard">SWITCH card (UK only): </label>
+					<input type="radio" id="radioSwitchCard" name="choiceCard" value="switch" onclick="switchCard();clearErrorCard();" />
+					<br />
+					<div id="setSwitchCard">
+						<label for="fieldSwitchNumber">SWITCH card issue number: </label>
+						<input type="text" id="fieldSwitchNumber" name="switchNumber" maxlength="3" size="3" onblur="checkCreditCode(this, 'Invalid issue number')"/>
+					</div>
+					<!-- credit card names tend to include full names, so allow spaces -->
+					<label for="fieldCardName">Name of cardholder: </label>
+					<input type="text" id="fieldCardName" name="cardName" maxlength="70" onblur="checkFullName(this, 'Invalid cardholder name')"/>
+					<br />
+					<label for="fieldCardNumber">Card number: </label>
+					<input type="text" id="fieldCardNumber" name="cardNumber1" maxlength="4" size="4" onblur="checkCreditSegment(this)" onkeyup="shiftToNext(4, this, f.cardNumber2)"/>
+					<input type="text" name="cardNumber2" maxlength="4" size="4" onblur="checkCreditSegment(this)" onkeyup="shiftToNext(4, this, f.cardNumber3)"/>
+					<input type="text" name="cardNumber3" maxlength="4" size="4" onblur="checkCreditSegment(this)" onkeyup="shiftToNext(4, this, f.cardNumber4)"/>
+					<input type="text" name="cardNumber4" maxlength="4" size="4" onblur="checkCreditSegment(this, 'Invalid card number')"/>
+					<br />
+					<label for="fieldCardCode">CVC/CVV number*: </label>
+					<input type="text" id="fieldCardCode" name="cardCode" maxlength="3" size="3" onblur="checkCreditCode(this, 'Invalid CVC/CCV number')" />
+					<p class="wide">
+						<i>*This is the three-digit number found on the signature strip on the back of your credit card</i>
+					</p>
+					<label for="dateCardExpiry">Expiry date: </label>
+					<input type="date" id="dateCardExpiry" name="cardExpiry" onblur="checkEmpty(this, 'Must select an expiry date')" />
+					<!-- Assuming signature is not required here -->
+					<!-- Assuming the "date" field after the signature is not required -->
+				</fieldset>
+				<p class="wide">
+					Note that we do not accept money orders.
+				</p>
+				</fieldset>
+				<p>
+					<br />
+				<input type="reset" class="formButton" value="Reset Application" >
+				<input type="submit" class="formButton" value="Submit Application" id="buttonSubmit" >
+			</p>
+		</form>
+	</section>
+	<section class="middle">
+		<h1>
+			About the information you provide
+		</h1>
+		<h2>
+			Deciding whether you are eligible for a visa
+		</h2>
+		<p>
+			Immigration New Zealand collects the information about
+			you on this form to decide whether you are eligible
+			for a visitor visa or a limited visa. We may also use the
+			information to contact you for research purposes or to
+			advise you on immigration matters.
+			Collecting the information is authorised by the
+			Immigration Act 2009 and the Immigration Regulations
+			made under that Act. You do not have to provide the
+			information, but if you do not we are likely to decline
+			your application.
+		</p>
+		<h2>
+			Deciding whether you are eligible to board a flight to New Zealand
+		</h2>
+		<p>
+			The information we collect may also be used to
+			determine whether you are allowed to board a flight to
+			New Zealand. We will not share your personal information
+			with airline check-in agents; however, we will send a
+			boarding message to the airline check-in agent based on
+			the information you have provided in this form.
+			Immigration New Zealand may also share the information
+			you have provided with other government agencies that
+			are entitled to it by law, or with other agencies (as you
+			have agreed in the declaration).
+			You are able to ask for the information we hold about you
+			and have any of it corrected if you think it is necessary.
+			The address of Immigration New Zealand is PO Box
+			3705, Wellington, New Zealand. This is not where your
+			application should be sent
+		</p>
+		<h2>
+			Other documents we may need
+		</h2>
+		<p>
+			Sometimes we may ask for additional documents or
+			information to consider with an application.
+			You may wish to send other documents or information
+			so that we can consider it with this application. Send
+			an email using your address that is used for communication
+			about this application. If we need to see an original
+			document, we will ask you to produce it later.
+		</p>
+		<h2>
+			For more information 
+		</h2>
+		<p>
+			If you have questions about completing the form:
+		</p>
+		<ul>
+			<li>
+				See our website <a href="http://www.immigration.govt.nz/contactus">www.immigration.govt.nz/contactus</a> 
+			</li>
+			<li>
+				Phone our call centre on 0508 558 855 (within New Zealand).
+			</li>
+		</ul>
+	</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../js/jquery-2.1.3.min.js"><\/script>')</script>
+<script src="../js/form.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+/*Anthony Meehan*/
+
+/*use a solid cyan and white theming for various elements*/
+body {
+	background-color: #fafafa;
+}
+
+header a {
+	color: white;
+}
+
+header {
+	text-align: center;
+	padding: 8px 32px;
+	background-color: #0097A7;
+}
+
+/*main content fills the center of the page*/
+section {
+	margin: auto;
+	padding: 0 64px;
+	max-width: 960px;
+}
+
+/*give the headings a strong, sturdy look*/
+h1, h1 a, h2, h2 a, header a, legend {
+	font-family : Georgia, serif; 
+	font-weight: bold;
+}
+
+h1, h2, a {
+	color: #0097A7;
+}
+
+a, header a:hover {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+h1, header a {
+	font-size: 48px;
+}
+
+h2, legend {
+	font-size: 32px;
+}
+
+/*give normal text a clean, readable look*/
+p, span, li, a {
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+}

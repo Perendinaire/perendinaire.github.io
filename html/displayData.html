@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<!-- Anthony Meehan -->
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>Submitted Form Data</title>
+	<style type="text/css">
+		body {
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+		}
+		table {
+			border-collapse:collapse;
+		}
+		tr:nth-child(even) {
+			background-color: #eee;
+		}
+		th {
+			background-color: black;
+			color:white;
+		}
+		th, td {
+			padding: 4px;
+		}
+	</style>
+	<script type="text/javascript">
+		function displayData() {
+			var dataDiv = document.getElementById("dataDiv");
+			//use innerHTML to display the table so create the initial HTML string
+			var tableHtml =
+			"<table><thead><tr><th>Key</th><th>Value</th></tr></thead><tbody>";
+			// window.location.search is GET part of URL ie ?k1=v1&k2=v2..
+			// get the data, sans '?'
+			var GETdata = window.location.search.substring(1);
+			//replace '+' with 'space' in URL
+			GETdata = GETdata.replace(/\+/g, ' ');
+			//split the data into 'key=value' array
+			var items = GETdata.split('&');
+			
+			for (var i = 0; i < items.length; i++) {
+				var item = items[i];
+				// split 'key=value'
+				var keyValue = item.split('=');
+				var key = keyValue[0];
+				var value = keyValue[1];
+				
+				value = decodeURIComponent(value);
+				// replace newlines with line breaks
+				value = value.replace(/\n/g, "<br />");
+				
+				// add the HTML for the table row to our HTML string
+				tableHtml += "<tr><td>" + key + "</td><td>" + value + "</td></tr>";
+			}
+			// finish the table HTML
+			tableHtml += "</tbody></table>";
+			dataDiv.innerHTML = tableHtml;
+		}
+	</script>
+</head>
+<body onload="displayData();">
+	<div id="dataDiv">
+		Failed to load JS
+	</div>
+</body>
+</html>

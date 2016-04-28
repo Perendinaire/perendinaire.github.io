@@ -1,0 +1,78 @@
+/*Anthony Meehan*/
+
+/*have the labels "stick" to the text boxes*/
+label {
+	width: 180px;
+	padding-right: 12px;
+	float: left;
+	text-align: right;
+}
+
+.longLabel label {
+	width: 250px;
+}
+
+/*formatting for error/highlighted messages*/
+.highlight {
+	padding-left: 12px;
+	color: #C24;
+}
+
+/*slight padding correction*/
+.wide {
+	padding-left: 12px;
+}
+
+/*give legends a similar look to headings*/
+legend {
+	font-weight: bold;
+	font-size: 16pt;
+	padding-top: 5px;
+	margin: 10px;
+}
+
+/*ensure labels stay to the left*/
+br {
+	clear: left;
+}
+
+input, select, textarea {
+	border-color: #777;
+}
+
+/*inputs with errors have a redder border*/
+.errorBox {
+	border-color: #C24;
+}
+
+/*show a clean "grouping" of each fieldset*/
+fieldset {
+	border-style: none none none solid;
+	border-color: #333;
+}
+
+input, select, textarea {
+	border-width: 1px;
+	border-style: solid;
+	margin-top: 3px;
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size   : 11pt;
+}
+
+input[type="file"] {
+	border-style: none;
+}
+
+input[type="radio"] {
+	margin-top: 8px;
+}
+
+.formButton {
+	background-color: white;
+}
+
+.formButton:hover {
+	background-color: #111;
+	border-color: black;
+	color: white;
+}

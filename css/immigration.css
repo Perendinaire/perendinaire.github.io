@@ -1,0 +1,79 @@
+/*Anthony Meehan*/
+
+/*Use a newzealandy black and white theme*/
+body {
+	background-color: #FAFAFA;
+}
+
+/*styles for a clean header bar*/
+header {
+	margin-bottom:100px;
+	text-align: center;
+}
+
+.right {
+	float: right;
+}
+
+.left {
+	float: left;
+}
+
+header div h1, header div h4 {
+	margin: 0px;
+	padding: 0px;
+	padding-bottom: 8px;
+}
+
+/*prevents the top header from mushing into elements below it*/
+.clearHead {
+	clear:right;
+}
+
+/*links have a more vibrant colour*/
+a {
+	color: #43C;
+}
+
+/*most elements sit towards the middle of the page*/
+.middle {
+	max-width : 960px;
+	min-width : 250px;
+	margin-left : auto;
+	margin-right : auto;
+	padding: 28px 38px 0px 38px;
+}
+
+/*headers and fancy elements can make use of the whole page*/
+.wideMiddle {
+	overflow:auto;
+	background-color: #111;
+	box-sizing:border-box;
+}
+
+/*give the headings a strong, sturdy look*/
+h1, h2, h3, legend {
+	font-family : Georgia, serif; 
+}
+
+/*give headings great contrast*/
+h1, h2, h4 {
+	background-color: #111;
+	color: white;
+	padding: 16px;
+}
+
+/*give normal texts, lists and other things a clean, readable look*/
+p, span, li, label, a, h4 {
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+h4 {
+	font-size  : 16pt;
+	font-weight: normal;
+}
+
+p, li, label, a {
+	font-size   : 12pt;
+	line-height : 150%;
+}
