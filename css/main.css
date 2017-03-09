@@ -5,11 +5,11 @@ body {
 	background-color: #fafafa;
 }
 
-header a {
+header a, h1 {
 	color: white;
 }
 
-header {
+header, h1 {
 	text-align: center;
 	padding: 8px 32px;
 	background-color: #0097A7;
@@ -28,7 +28,7 @@ h1, h1 a, h2, h2 a, header a, legend {
 	font-weight: bold;
 }
 
-h1, h2, a {
+h2, a {
 	color: #0097A7;
 }
 
