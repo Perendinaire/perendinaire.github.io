@@ -3,6 +3,7 @@
 /*Use a newzealandy black and white theme*/
 body {
 	background-color: #FAFAFA;
+	margin: 0;
 }
 
 /*styles for a clean header bar*/
