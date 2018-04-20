@@ -3,6 +3,7 @@
 /*use a solid cyan and white theming for various elements*/
 body {
 	background-color: #fafafa;
+	margin: 0;
 }
 
 header a, h1 {
